@@ -7,7 +7,7 @@ def hello():
 
 @app.route("/juan")
 def hello2():
-    return "Hello Juan como estas?"
+    return "User juan"
 
 if __name__ == '__main__':
     app.run(debug=True)

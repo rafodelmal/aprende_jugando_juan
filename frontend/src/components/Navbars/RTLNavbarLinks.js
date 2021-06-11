@@ -40,51 +40,11 @@ export default function RTLNavbarLinks() {
   return (
     <div>
       <div className={classes.searchWrapper}>
-        <CustomInput
-          formControlProps={{
-            className: classes.margin + " " + classes.search
-          }}
-          inputProps={{
-            placeholder: "جستجو...",
-            inputProps: {
-              "aria-label": "Search"
-            }
-          }}
-        />
-        <Button color="white" aria-label="edit" justIcon round>
-          <Search />
-        </Button>
+        
       </div>
-      <Button
-        color={window.innerWidth > 959 ? "transparent" : "white"}
-        justIcon={window.innerWidth > 959}
-        simple={!(window.innerWidth > 959)}
-        aria-label="Dashboard"
-        className={classes.buttonLink}
-      >
-        <Dashboard className={classes.icons} />
-        <Hidden mdUp implementation="css">
-          <p className={classes.linkText}>آمارها</p>
-        </Hidden>
-      </Button>
+      
       <div className={classes.manager}>
-        <Button
-          color={window.innerWidth > 959 ? "transparent" : "white"}
-          justIcon={window.innerWidth > 959}
-          simple={!(window.innerWidth > 959)}
-          aria-owns={open ? "menu-list-grow" : null}
-          aria-haspopup="true"
-          onClick={handleToggle}
-          className={classes.buttonLink}
-        >
-          <Notifications className={classes.icons} />
-          <span className={classes.notifications}>۵</span>
-          <Hidden mdUp implementation="css">
-            <p onClick={handleToggle} className={classes.linkText}>
-              اعلان‌ها
-            </p>
-          </Hidden>
-        </Button>
+        
         <Poppers
           open={Boolean(open)}
           anchorEl={open}

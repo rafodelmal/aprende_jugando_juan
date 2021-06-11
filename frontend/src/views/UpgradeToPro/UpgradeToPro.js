@@ -1,212 +1,210 @@
-import React from "react";
+import React, {useState, Component, useEffect} from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-// @material-ui/icons
-import Close from "@material-ui/icons/Close";
-import Check from "@material-ui/icons/Check";
+import InputLabel from "@material-ui/core/InputLabel";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import Danger from "components/Typography/Danger.js";
-import Success from "components/Typography/Success.js";
+import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
+import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
+import CardFooter from "components/Card/CardFooter.js";
+import Formulario from "components/Formulario/Formulario.js";
+import 'bootswatch/dist/lux/bootstrap.min.css'
 
-const styles = {
-  cardCategoryWhite: {
-    "&,& a,& a:hover,& a:focus": {
-      color: "rgba(255,255,255,.62)",
-      margin: "0",
-      fontSize: "14px",
-      marginTop: "0",
-      marginBottom: "0"
-    },
-    "& a,& a:hover,& a:focus": {
-      color: "#FFFFFF"
-    }
-  },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none",
-    "& small": {
-      color: "#777",
-      fontSize: "65%",
-      fontWeight: "400",
-      lineHeight: "1"
-    }
-  },
-  tableUpgradeWrapper: {
-    display: "block",
-    width: "100%",
-    overflowX: "auto",
-    WebkitOverflowScrolling: "touch",
-    MsOverflowStyle: "-ms-autohiding-scrollbar"
-  },
-  table: {
-    width: "100%",
-    maxWidth: "100%",
-    marginBottom: "1rem",
-    backgroundColor: "transparent",
-    borderCollapse: "collapse",
-    display: "table",
-    borderSpacing: "2px",
-    borderColor: "grey",
-    "& thdead tr th": {
-      fontSize: "1.063rem",
-      padding: "12px 8px",
-      verticalAlign: "middle",
-      fontWeight: "300",
-      borderTopWidth: "0",
-      borderBottom: "1px solid rgba(0, 0, 0, 0.06)",
-      textAlign: "inherit"
-    },
-    "& tbody tr td": {
-      padding: "12px 8px",
-      verticalAlign: "middle",
-      borderTop: "1px solid rgba(0, 0, 0, 0.06)"
-    },
-    "& td, & th": {
-      display: "table-cell"
-    }
-  },
-  center: {
-    textAlign: "center"
+import avatar from "assets/img/faces/marc.jpg";
+
+
+
+const API = process.env.REACT_APP_API;
+
+
+
+export default function UserProfile() {
+  
+
+  const [name,setName] = useState('')
+  const [email,setEmail] = useState('')
+  const [image,setImage] = useState('')
+  const [ahorcado,setAhorcado] = useState('')
+  const [triqui,setTriqui] = useState('')
+  const [stop,setStop] = useState('')
+  const [password,setPassword] = useState('')
+
+ 
+  const [id,setId] = useState('')
+
+  const [users,setUsers] = useState([])
+
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res =await fetch(`${API}/users/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        image,
+        ahorcado,
+        triqui,
+        stop,
+        password
+      })
+
+      
+    })
+  const data = await res.json();
+  console.log(data)
+  setId('');
+  await getUsers();
+    
+
+
+    
+   
+  }  
+
+  const getUsers = async () => {
+    const res = await fetch(`${API}/users`)
+    const data = await res.json();
+    setUsers(data)
   }
-};
 
-const useStyles = makeStyles(styles);
+  useEffect(() => {
+    getUsers();
 
-export default function UpgradeToPro() {
-  const classes = useStyles();
-  return (
-    <GridContainer justify="center">
-      <GridItem xs={12} sm={12} md={8}>
-        <Card>
-          <CardHeader color="info">
-            <h4 className={classes.cardTitleWhite}>
-              Material Dashboard PRO React
-            </h4>
-            <p className={classes.cardCategoryWhite}>
-              Are you looking for more components? Please check our Premium
-              Version of Material Dashboard Angular.
-            </p>
-          </CardHeader>
-          <CardBody>
-            <div className={classes.tableUpgradeWrapper}>
-              <table className={classes.table}>
-                <thead>
-                  <tr>
-                    <th />
-                    <th className={classes.center}>Free</th>
-                    <th className={classes.center}>PRO</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Components</td>
-                    <td className={classes.center}>30</td>
-                    <td className={classes.center}>200</td>
-                  </tr>
-                  <tr>
-                    <td>Plugins</td>
-                    <td className={classes.center}>2</td>
-                    <td className={classes.center}>10</td>
-                  </tr>
-                  <tr>
-                    <td>Example Pages</td>
-                    <td className={classes.center}>7</td>
-                    <td className={classes.center}>28</td>
-                  </tr>
-                  <tr>
-                    <td>Login, Register, Pricing, Lock Pages</td>
-                    <td className={classes.center}>
-                      <Danger>
-                        <Close />
-                      </Danger>
-                    </td>
-                    <td className={classes.center}>
-                      <Success>
-                        <Check />
-                      </Success>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      ReactTables, ReactVectorMap, ReactSweetAlert, Wizard,
-                      Validation, ReactBigCalendar etc...
-                    </td>
-                    <td className={classes.center}>
-                      <Danger>
-                        <Close />
-                      </Danger>
-                    </td>
-                    <td className={classes.center}>
-                      <Success>
-                        <Check />
-                      </Success>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Mini Sidebar</td>
-                    <td className={classes.center}>
-                      <Danger>
-                        <Close />
-                      </Danger>
-                    </td>
-                    <td className={classes.center}>
-                      <Success>
-                        <Check />
-                      </Success>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Premium Support</td>
-                    <td className={classes.center}>
-                      <Danger>
-                        <Close />
-                      </Danger>
-                    </td>
-                    <td className={classes.center}>
-                      <Success>
-                        <Check />
-                      </Success>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td />
-                    <td className={classes.center}>Free</td>
-                    <td className={classes.center}>Just $59</td>
-                  </tr>
-                  <tr>
-                    <td />
-                    <td className={classes.center}>
-                      <Button round disabled>
-                        Current Version
-                      </Button>
-                    </td>
-                    <td className={classes.center}>
-                      <Button
-                        round
-                        color="danger"
-                        href="https://www.creative-tim.com/product/material-dashboard-pro-react?ref=mdr-upgrade-live"
-                      >
-                        Upgrade to Pro
-                      </Button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </CardBody>
-        </Card>
-      </GridItem>
-    </GridContainer>
+  }, [])
+
+  const editUser = async (id) => {
+    const res = await fetch(`${API}/user/${id}`)
+    const data = await res.json();
+
+    setId(id);
+    
+    setName(data.name)
+    setImage(data.image)
+    setEmail(data.email)
+    setAhorcado(data.ahorcado)
+    setTriqui(data.triqui)
+    setStop(data.stop)
+    setPassword(data.password)
+
+
+  }
+
+  const deleteUser = async (id) => {
+    const userResponse = window.confirm('Desea eliminarlo')
+    if (userResponse){
+      const res = await fetch(`${API}/users/${id}`, {
+        method: 'DELETE'
+      });
+      const data = await res.json();
+      console.log(data)
+      await getUsers();
+    }
+
+  }
+
+  return ( 
+    <div className="row">
+    <div className="col-md-3">
+      <form onSubmit={handleSubmit} classname="">
+      
+      
+      <div className="form-group">
+        <input 
+          type ="text" 
+          onChange={e => setName(e.target.value)} 
+          value={name}
+          className="form-control"
+          placeholder="Nombre"
+          
+        />
+        
+        <input 
+          type ="number" 
+          onChange={e => setAhorcado(e.target.value)} 
+          value={ahorcado}
+          className="form-control"
+          placeholder="Ahorcado"
+        />
+        <input 
+          type ="number" 
+          onChange={e => setTriqui(e.target.value)} 
+          value={triqui}
+          className="form-control"
+          placeholder="Triqui"
+        />
+        <input 
+          type ="number" 
+          onChange={e => setStop(e.target.value)} 
+          value={stop}
+          className="form-control"
+          placeholder="Stop"
+        />
+        
+
+      </div>
+      
+      <button className="btn btn-primary btn-block" >
+              Editar
+      </button>
+
+      </form>
+    </div> 
+
+    <div className='col-md-6'>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Nomrbe</th>            
+            <th>Ahorcado</th>
+            <th>Triqui</th>
+            <th>Stop</th>
+            <th>Operaciones</th>
+          </tr>
+        
+        </thead>
+        <tbody>
+          {users.map(user => (
+            <tr key={user._id}>
+              <td>{user.name}</td>
+              <td>{user.ahorcado}</td>
+              <td>{user.triqui}</td>
+              <td>{user.stop}</td>
+              <td>
+                <button 
+                  className="btn btn-secondary btn-sm btn-block"
+                  onClick={() => editUser(user._id)}
+                  >
+                  Editar
+                </button>
+                <button 
+                  className="btn btn-danger btn-sm btn-block"
+                  onClick={() => deleteUser(user._id)}
+                  >
+                  Eliminar
+                </button>
+              </td>
+              
+            </tr>
+          ))}
+
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+  
+    
   );
 }
+

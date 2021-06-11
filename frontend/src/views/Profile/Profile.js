@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
 // @material-ui/core
@@ -33,11 +33,6 @@ import Button from "components/CustomButtons/Button.js";
 
 import { bugs, website, server } from "variables/general.js";
 
-
-import { LoginButton } from "components/Login/Login.js";
-import { LogoutButton } from "components/Logout/Logout.js";
-import { Profile } from "components/Profile/Profile.js";
-
 import {
   dailySalesChart,
   emailsSubscriptionChart,
@@ -46,49 +41,79 @@ import {
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
-
-
-
-
 const useStyles = makeStyles(styles);
 
 const API = process.env.REACT_APP_API;
 
-
-
 export default function Dashboard() {
   const classes = useStyles();
- 
-  const [users,setUser] = useState([])
+  const [user,setUser] = useState('')
+  const [email,setEmail] = useState('')
+  const [password,setPassword] = useState('')
 
   const handleSubmit = async (e) => {
-    e.preventDefault();    
-  }
+    e.preventDefault();
+    const res = await fetch(`${API}/users`, {
 
-  
-  const getUser = async (id) => {
-    const res = await fetch(`${API}/users/${id}`)
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user,
+        email,
+        password
+      })
+    })
     const data = await res.json();
     console.log(data)
   }
 
-  useEffect(() => {
-    getUser();
-
-  }, [])
-
 
 
   return (
+    <div>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={8}>
+          <Card>
+            <CardHeader>
+            <CustomInput
+                    labelText="Email"
+                    id="email"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                  />
+            <CustomInput
+                    labelText="Password"
+                    id="password"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                  />
 
-    <div className="Dashboard">
-          
-          <Profile />
-          <LogoutButton />
+              <Button color="primary" round>
+                Login
+              </Button>
+                         
+              
+            </CardHeader>
+            <CardFooter stats>
+              <div className={classes.stats}>
+                <Danger>
+                  <Warning />
+                </Danger>
+                <a href="" onClick={e => e.preventDefault()}>
+                  olvidaste tu contraseña
+                </a>
+              </div>
+            </CardFooter>
+          </Card>
+        </GridItem>
 
-          
-
-      </div>
-    
+        
+        
+      </GridContainer>
+    </div>
   );
 }

@@ -27,7 +27,7 @@ import Language from "@material-ui/icons/Language";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
-import TableList from "views/TableList/TableList.js";
+
 import Typography from "views/Typography/Typography.js";
 import Icons from "views/Icons/Icons.js";
 import Maps from "views/Maps/Maps.js";
@@ -36,74 +36,47 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.js";
 
-const dashboardRoutes = [
+const Routes = [
   {
-    path: "/dashboard",
-    name: "Dashboard",
+    path: "/profile",
+    name: "Profile",
     rtlName: "لوحة القيادة",
-    icon: Dashboard,
+    icon: Person,
     component: DashboardPage,
     layout: "/admin"
   },
   {
     path: "/user",
-    name: "User Profile",
+    name: "Ahorcado",
     rtlName: "ملف تعريفي للمستخدم",
-    icon: Person,
+    icon: "content_paste",
     component: UserProfile,
     layout: "/admin"
   },
-  {
-    path: "/table",
-    name: "Table List",
-    rtlName: "قائمة الجدول",
-    icon: "content_paste",
-    component: TableList,
-    layout: "/admin"
-  },
+  
   {
     path: "/typography",
-    name: "Typography",
+    name: "Triqui",
     rtlName: "طباعة",
     icon: LibraryBooks,
     component: Typography,
     layout: "/admin"
   },
-  {
-    path: "/icons",
-    name: "Icons",
-    rtlName: "الرموز",
-    icon: BubbleChart,
-    component: Icons,
-    layout: "/admin"
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    rtlName: "خرائط",
-    icon: LocationOn,
-    component: Maps,
-    layout: "/admin"
-  },
+  
   {
     path: "/notifications",
-    name: "Notifications",
+    name: "Stop",
     rtlName: "إخطارات",
     icon: Notifications,
     component: NotificationsPage,
     layout: "/admin"
   },
-  {
-    path: "/rtl-page",
-    name: "RTL Support",
-    rtlName: "پشتیبانی از راست به چپ",
-    icon: Language,
-    component: RTLPage,
-    layout: "/rtl"
-  },
+
+
+  
   {
     path: "/upgrade-to-pro",
-    name: "Upgrade To PRO",
+    name: "Tabla de posiciones",
     rtlName: "التطور للاحترافية",
     icon: Unarchive,
     component: UpgradeToPro,
@@ -111,4 +84,4 @@ const dashboardRoutes = [
   }
 ];
 
-export default dashboardRoutes;
+export default Routes;

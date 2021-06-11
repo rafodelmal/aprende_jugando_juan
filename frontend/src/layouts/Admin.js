@@ -11,6 +11,8 @@ import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
+import { LoginButton } from "components/Login/Login.js";
+
 import routes from "routes.js";
 
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
@@ -31,10 +33,12 @@ const switchRoutes = (
             key={key}
           />
         );
+
       }
+
       return null;
     })}
-    <Redirect from="/admin" to="/admin/dashboard" />
+     <Redirect from="/admin" to="/admin/profile" />
   </Switch>
 );
 
@@ -96,15 +100,21 @@ export default function Admin({ ...rest }) {
     <div className={classes.wrapper}>
       <Sidebar
         routes={routes}
-        logoText={"Creative Tim"}
+        logoText={"Aprende Jugando"}
         logo={logo}
         image={image}
         handleDrawerToggle={handleDrawerToggle}
         open={mobileOpen}
         color={color}
+        
+
         {...rest}
       />
+      
       <div className={classes.mainPanel} ref={mainPanel}>
+
+      
+
         <Navbar
           routes={routes}
           handleDrawerToggle={handleDrawerToggle}
