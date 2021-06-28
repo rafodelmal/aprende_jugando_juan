@@ -21,9 +21,14 @@ import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
 
-import { useAuth0 } from '@auth0/auth0-react';
+import Logout from "components/Logout/Logout";
+import 'bootswatch/dist/lux/bootstrap.min.css'
+
+
 
 const useStyles = makeStyles(styles);
+
+
 
 export default function AdminNavbarLinks() {
   const classes = useStyles();
@@ -48,16 +53,17 @@ export default function AdminNavbarLinks() {
   };
   const handleCloseProfile = () => {
     setOpenProfile(null);
+    
   };
-
-  //const { logout } = useAuth0();
-
+  
 
   return (
     <div>   
       
       
       <div className={classes.manager}>
+        
+
         <Button
           color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
@@ -69,7 +75,7 @@ export default function AdminNavbarLinks() {
         >
           <Person className={classes.icons} />
           <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Profile</p>
+            <p className={classes.linkText}></p>
           </Hidden>
         </Button>
         <Poppers
@@ -96,21 +102,7 @@ export default function AdminNavbarLinks() {
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
                     
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Settings
-                    </MenuItem>
-                    <Divider light />
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      //onClick={logout({returnTo: window.location.origin})}
-
-                      className={classes.dropdownItem}
-                    >
-                      Logout
-                    </MenuItem>
+                  <Logout />
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

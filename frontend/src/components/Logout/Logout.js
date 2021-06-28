@@ -1,10 +1,27 @@
-import React from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
+import React, { Component } from 'react';
+import 'bootswatch/dist/lux/bootstrap.min.css'
 
-export const LogoutButton = () => {
-    const { logout } = useAuth0();
+import Cookies from 'universal-cookie';
 
-    return <button onClick={() => logout({returnTo: window.location.origin})}>Cerrar Sesion</button>
+const cookies = new Cookies();
 
+class Logout extends Component {
+    cerrarSesion=()=>{
+        cookies.remove('name', {path: "/"});
+        cookies.remove('email', {path: "/"});
+        cookies.remove('image', {path: "/"});
+        
+        window.location.href='http://localhost:3000/';
+    }
 
+    
+
+    render() {        
+        return <button className="btn btn-primary btn-block"  onClick={()=>this.cerrarSesion()}>Cerrar Sesión</button>
+
+            
+        
+    }
 }
+
+export default Logout;

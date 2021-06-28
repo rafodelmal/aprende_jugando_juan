@@ -3,19 +3,12 @@ import React, {useState, Component, useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 // core components
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
-import Button from "components/CustomButtons/Button.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardAvatar from "components/Card/CardAvatar.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-import Formulario from "components/Formulario/Formulario.js";
+
 import 'bootswatch/dist/lux/bootstrap.min.css'
+import Cookies from 'universal-cookie';
 
 import avatar from "assets/img/faces/marc.jpg";
+import { render } from "react-dom";
 
 
 
@@ -23,8 +16,7 @@ const API = process.env.REACT_APP_API;
 
 
 
-export default function UserProfile() {
-  
+export default function UserProfile() {  
 
   const [name,setName] = useState('')
   const [email,setEmail] = useState('')
@@ -33,6 +25,7 @@ export default function UserProfile() {
   const [triqui,setTriqui] = useState('')
   const [stop,setStop] = useState('')
   const [password,setPassword] = useState('')
+  const [rol,setRol] = useState('')
 
  
   const [id,setId] = useState('')
@@ -55,20 +48,21 @@ export default function UserProfile() {
         ahorcado,
         triqui,
         stop,
-        password
+        password,
+        rol
       })
-
       
     })
   const data = await res.json();
-  console.log(data)
+  
   setId('');
   await getUsers();
-    
 
+  setName('');
+  setAhorcado('');
+  setStop('');
+  setTriqui('');
 
-    
-   
   }  
 
   const getUsers = async () => {
@@ -88,19 +82,18 @@ export default function UserProfile() {
 
     setId(id);
     
-    setName(data.name)
+    setName(data.name) 
     setImage(data.image)
     setEmail(data.email)
     setAhorcado(data.ahorcado)
     setTriqui(data.triqui)
     setStop(data.stop)
     setPassword(data.password)
-
-
+    setRol(data.rol)
   }
 
   const deleteUser = async (id) => {
-    const userResponse = window.confirm('Desea eliminarlo')
+    const userResponse = window.confirm('¿Desea eliminarlo?')
     if (userResponse){
       const res = await fetch(`${API}/users/${id}`, {
         method: 'DELETE'
@@ -112,9 +105,25 @@ export default function UserProfile() {
 
   }
 
+  const cookies = new Cookies();
+  const algo = cookies.get('id');
+
+  function prueba (){
+    if ( cookies.get('email') === '106561092142898269205'){  
+      return true
+     
+    }else{
+      return false           
+    }
+
+  }
+  const admin = prueba();
+  
   return ( 
     <div className="row">
-    <div className="col-md-3">
+      
+      {admin && 
+      <div className="col-md-3">
       <form onSubmit={handleSubmit} classname="">
       
       
@@ -159,6 +168,10 @@ export default function UserProfile() {
 
       </form>
     </div> 
+      
+      }      
+
+    
 
     <div className='col-md-6'>
       <table className="table table-striped">

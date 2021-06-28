@@ -11,8 +11,6 @@ CORS(app)
 
 db = mongo.db.users
 
-
-
 @app.route('/register', methods=['POST']) 
 def createUser():
     if request.method == 'POST':
@@ -27,13 +25,12 @@ def createUser():
                 'ahorcado': request.json['ahorcado'],
                 'triqui': request.json['triqui'],
                 'stop': request.json['stop'],
-                'password': request.json['password']    
-                })    
+                'password': request.json['password'],   
+                'rol': request.json['rol']
+                })
+   
     
         return jsonify(str(ObjectId(id)))
-
-    
-    
 
 @app.route('/users', methods=['GET'])
 def getUsers():
@@ -47,14 +44,17 @@ def getUsers():
             'ahorcado': doc['ahorcado'],
             'triqui': doc['triqui'],
             'stop': doc['stop'],
-            'password': doc['password']
+            'password': doc['password'],
+            'rol': doc['rol']
         })
     return jsonify(users)
     
 
-@app.route('/user/<id>', methods=['GET'])
+@app.route('/user/<email>', methods=['GET'])
 def getUser(id):
-    user = db.find_one({'_id': ObjectId(id)})
+    user = mongo.db.users
+    existing_user = user.find_one({'email' : request.json['email']})
+    
     print (user)
     return  jsonify({
         '_id': str(ObjectId(user['_id'])),
@@ -64,7 +64,8 @@ def getUser(id):
         'ahorcado': user['ahorcado'],
         'triqui': user['triqui'],
         'stop': user['stop'],
-        'password': user['password']
+        'password': user['password'],
+        'rol': user['rol']
 
     })
 
@@ -82,14 +83,12 @@ def updateUser(id):
         'ahorcado': request.json['ahorcado'],
         'triqui': request.json['triqui'],
         'stop': request.json['stop'],
-        'password': request.json['password']
+        'password': request.json['password'],
+        'rol': request.json['rol']
+
     }})
 
     return jsonify({'msg': 'User Updated'})
     
-
-
-
-
 if __name__ == "__main__":
     app.run(debug=True)
